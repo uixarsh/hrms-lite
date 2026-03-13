@@ -7,8 +7,6 @@ from app.api import attendance
 
 app = FastAPI(title="HRMS Lite API")
 
-
-# CORS (allow frontend)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -17,21 +15,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-# Routers
 app.include_router(employees.router)
 app.include_router(attendance.router)
 
 
 @app.on_event("startup")
 async def startup():
-    print("Starting HRMS API...")
     await init_db()
 
 
 @app.on_event("shutdown")
 async def shutdown():
-    print("Shutting down HRMS API...")
     await close_db()
 
 
