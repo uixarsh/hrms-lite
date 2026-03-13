@@ -1,6 +1,7 @@
 import asyncpg
 import os
 import asyncio
+import ssl
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -15,13 +16,17 @@ async def init_db():
 
     retries = 10
 
+    ssl_context = ssl.create_default_context()
+    ssl_context.check_hostname = False
+    ssl_context.verify_mode = ssl.CERT_NONE
+
     for i in range(retries):
         try:
             pool = await asyncpg.create_pool(
                 dsn=DATABASE_URL,
+                ssl=ssl_context,
                 min_size=1,
-                max_size=10,
-                ssl=True
+                max_size=10
             )
 
             print("Connected to Postgres")
@@ -49,7 +54,6 @@ async def init_db():
                 """)
 
             print("Tables ensured")
-
             return
 
         except Exception as e:
