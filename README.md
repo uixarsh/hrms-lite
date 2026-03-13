@@ -21,7 +21,7 @@ A lightweight Human Resource Management System (HRMS) application with a FastAPI
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repo-url>
+git clone git@github.com:uixarsh/hrms-lite.git
 cd hrms-lite
 ```
 
