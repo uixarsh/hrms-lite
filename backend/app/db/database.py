@@ -36,6 +36,11 @@ async def init_db():
             async with pool.acquire() as conn:
 
                 await conn.execute("""
+                ALTER TABLE employees
+                ADD COLUMN IF NOT EXISTS created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                """)
+
+                await conn.execute("""
                 CREATE TABLE IF NOT EXISTS employees (
                     id UUID PRIMARY KEY,
                     employee_id TEXT UNIQUE NOT NULL,
