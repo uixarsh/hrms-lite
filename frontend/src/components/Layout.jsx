@@ -3,7 +3,6 @@ import Sidebar from "./Sidebar"
 import Header from "./Header"
 
 export default function Layout({ children }) {
-
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
@@ -15,13 +14,8 @@ export default function Layout({ children }) {
 
         <Header setSidebarOpen={setSidebarOpen} />
 
-        <main className="flex-1 px-4 md:px-8 py-8 flex justify-center">
-
-          {/* centered container */}
-          <div className="w-full max-w-7xl">
-            {children}
-          </div>
-
+        <main className="flex-1 px-6 md:px-10 py-8 w-full">
+          {children}
         </main>
 
       </div>
