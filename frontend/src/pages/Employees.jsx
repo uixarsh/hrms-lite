@@ -10,7 +10,7 @@ export default function Employees() {
   const { data, isLoading } = useQuery({
     queryKey: ["employees"],
     queryFn: async () => {
-      const res = await api.get("/employees")
+      const res = await api.get("/employees/")
       return res.data
     }
   })

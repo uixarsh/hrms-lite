@@ -95,8 +95,8 @@ If you prefer not to use Docker:
 - **Frontend**: Open `http://localhost:5173` in your browser to access the web interface.
 - **API Endpoints**:
   - `GET /` - Health check
-  - Employee endpoints (under `/api/employees`)
-  - Attendance endpoints (under `/api/attendance`)
+  - Employee endpoints (under `/api/employees/`)
+  - Attendance endpoints (under `/api/attendance/`)
 
 ## Project Structure
 
