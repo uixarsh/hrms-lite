@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 from app.db.database import init_db, close_db
 from app.api import employees
+from app.api import attendance
 
 app = FastAPI(title="HRMS Lite")
 
 app.include_router(employees.router)
-
+app.include_router(attendance.router)
 
 @app.on_event("startup")
 async def startup():
