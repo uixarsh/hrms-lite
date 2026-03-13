@@ -19,11 +19,38 @@ async def init_db():
         try:
             pool = await asyncpg.create_pool(
                 DATABASE_URL,
-                min_size=5,
-                max_size=20
+                min_size=1,
+                max_size=10,
+                ssl="require" if "railway" in DATABASE_URL else None
             )
 
             print("Connected to Postgres")
+
+            # create tables automatically
+            async with pool.acquire() as conn:
+
+                await conn.execute("""
+                CREATE TABLE IF NOT EXISTS employees (
+                    id UUID PRIMARY KEY,
+                    employee_id TEXT UNIQUE,
+                    full_name TEXT NOT NULL,
+                    email TEXT UNIQUE,
+                    department TEXT
+                )
+                """)
+
+                await conn.execute("""
+                CREATE TABLE IF NOT EXISTS attendance (
+                    id UUID PRIMARY KEY,
+                    employee_id UUID REFERENCES employees(id) ON DELETE CASCADE,
+                    date DATE NOT NULL,
+                    status TEXT NOT NULL,
+                    UNIQUE(employee_id, date)
+                )
+                """)
+
+            print("Tables ensured")
+
             return
 
         except Exception as e:
@@ -34,7 +61,9 @@ async def init_db():
 
 
 async def close_db():
-    await pool.close()
+    global pool
+    if pool:
+        await pool.close()
 
 
 async def get_connection():
