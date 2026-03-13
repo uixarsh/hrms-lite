@@ -16,7 +16,7 @@ export default function Attendance() {
   const { data: employees } = useQuery({
     queryKey: ["employees"],
     queryFn: async () => {
-      const res = await api.get("/employees")
+      const res = await api.get("/employees/")
       return res.data
     }
   })
@@ -25,14 +25,14 @@ export default function Attendance() {
   const { data: attendance } = useQuery({
     queryKey: ["attendance"],
     queryFn: async () => {
-      const res = await api.get("/attendance")
+      const res = await api.get("/attendance/")
       return res.data
     }
   })
 
   // mark attendance
   const markAttendance = useMutation({
-    mutationFn: (data) => api.post("/attendance", data),
+    mutationFn: (data) => api.post("/attendance/", data),
     onSuccess: () => queryClient.invalidateQueries(["attendance"])
   })
 

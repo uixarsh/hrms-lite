@@ -14,7 +14,7 @@ export default function AddEmployeeModal({ close }) {
   })
 
   const createEmployee = useMutation({
-    mutationFn: (data) => api.post("/employees", data),
+    mutationFn: (data) => api.post("/employees/", data),
     onSuccess: () => {
       queryClient.invalidateQueries(["employees"])
       close()
