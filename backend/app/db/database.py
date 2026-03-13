@@ -18,15 +18,14 @@ async def init_db():
     for i in range(retries):
         try:
             pool = await asyncpg.create_pool(
-                DATABASE_URL,
+                dsn=DATABASE_URL,
                 min_size=1,
                 max_size=10,
-                ssl="require" if "railway" in DATABASE_URL else None
+                ssl=True
             )
 
             print("Connected to Postgres")
 
-            # create tables automatically
             async with pool.acquire() as conn:
 
                 await conn.execute("""
@@ -55,6 +54,7 @@ async def init_db():
 
         except Exception as e:
             print(f"Postgres not ready... retrying ({i+1}/{retries})")
+            print("Error:", e)
             await asyncio.sleep(2)
 
     raise Exception("Could not connect to Postgres")
